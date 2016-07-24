@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <base href="/">
+    <link rel="stylesheet" href="styles.css">
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <title>PokeGuide</title>
+
+    <script src="node_modules/zone.js/dist/zone.js"></script>
+    <script src="node_modules/reflect-metadata/Reflect.js"></script>
+
+    <!-- this doesn't work in nw.js for some reason  -->
+    <!-- <script src="node_modules/systemjs/dist/system.src.js"></script> -->
+    <!-- but this does -->
+    <script src="https://code.angularjs.org/tools/system.js"></script>
+
+    <script src="systemjs.config.js"></script>
+    <script>
+        System.import('app').catch(function(err) {
+            console.error(err);
+        });
+    </script>
+</head>
+
+<body>
+    <poke-guide-web>Loading...</poke-guide-web>
+</body>
+
+</html>
