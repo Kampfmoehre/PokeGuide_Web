@@ -37,6 +37,3 @@ jspm_packages
 .node_repl_history
 
 nw.js/*
-typings/*
-app/*.js
-app/*.js.map

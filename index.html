@@ -2,32 +2,28 @@
 <html>
 
 <head>
-    <base href="/">
-    <link rel="stylesheet" href="styles.css">
-
     <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-
     <title>PokeGuide</title>
+    <link rel="stylesheet" href="styles.css">
 
     <script src="node_modules/zone.js/dist/zone.js"></script>
     <script src="node_modules/reflect-metadata/Reflect.js"></script>
 
-    <!-- this doesn't work in nw.js for some reason  -->
-    <!-- <script src="node_modules/systemjs/dist/system.src.js"></script> -->
-    <!-- but this does -->
-    <script src="https://code.angularjs.org/tools/system.js"></script>
+    <script src="node_modules/rxjs/bundles/Rx.umd.js"></script>
+    <script src="node_modules/@angular/core/bundles/core.umd.js"></script>
+    <script src="node_modules/@angular/common/bundles/common.umd.js"></script>
+    <script src="node_modules/@angular/compiler/bundles/compiler.umd.js"></script>
+    <script src="node_modules/@angular/platform-browser/bundles/platform-browser.umd.js"></script>
+    <script src="node_modules/@angular/platform-browser-dynamic/bundles/platform-browser-dynamic.umd.js"></script>
 
-    <script src="systemjs.config.js"></script>
-    <script>
-        System.import('app').catch(function(err) {
-            console.error(err);
-        });
-    </script>
+    <!-- 2. Load our 'modules' -->
+    <script src='app/pokemon-detail.component.js'></script>
+    <script src='app/app.component.js'></script>
+    <script src='app/main.js'></script>
 </head>
 
 <body>
-    <poke-guide-web>Loading...</poke-guide-web>
+    <pokeguide>Loading ...</pokeguide>
 </body>
 
 </html>
