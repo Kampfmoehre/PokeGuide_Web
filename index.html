@@ -2,28 +2,33 @@
 <html>
 
 <head>
+    <base href="/">
     <meta charset="utf-8">
     <title>PokeGuide</title>
     <link rel="stylesheet" href="styles.css">
 
     <script src="node_modules/zone.js/dist/zone.js"></script>
     <script src="node_modules/reflect-metadata/Reflect.js"></script>
-
     <script src="node_modules/rxjs/bundles/Rx.umd.js"></script>
+
     <script src="node_modules/@angular/core/bundles/core.umd.js"></script>
     <script src="node_modules/@angular/common/bundles/common.umd.js"></script>
     <script src="node_modules/@angular/compiler/bundles/compiler.umd.js"></script>
     <script src="node_modules/@angular/platform-browser/bundles/platform-browser.umd.js"></script>
     <script src="node_modules/@angular/platform-browser-dynamic/bundles/platform-browser-dynamic.umd.js"></script>
+    <script src="node_modules/@angular/router/bundles/router.umd.js"></script>
 
-    <!-- 2. Load our 'modules' -->
+    <script src='app/pokemon.service.js'></script>
     <script src='app/pokemon-detail.component.js'></script>
+    <script src='app/pokemon-list.component.js'></script>
+    <script src='app/dashboard.component.js'></script>
     <script src='app/app.component.js'></script>
+    <script src='app/app.routes.js'></script>
     <script src='app/main.js'></script>
 </head>
 
 <body>
-    <pokeguide>Loading ...</pokeguide>
+    <poke-guide-web>Loading ...</poke-guide-web>
 </body>
 
 </html>

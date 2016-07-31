@@ -1,18 +1,33 @@
+var fs = require('fs');
+var sqlite3 = require('sqlite3').verbose();
+var db = new sqlite3.Database('data/pokedex.sqlite', sqlite3.OPEN_READONLY);
+
 (function(app) {
-    app.PokemonService = function() {
-        this.get = function() {
-            return [
-                { id: 1, name: 'Bisasam' },
-                { id: 4, name: 'Glumanda' },
-                { id: 7, name: 'Schiggy' },
-                { id: 10, name: 'Raupy' },
-                { id: 13, name: 'Hornliu' },
-                { id: 16, name: 'Taubsi' },
-                { id: 19, name: 'Rattfratz' },
-                { id: 21, name: 'Habitak' },
-                { id: 23, name: 'Rettan' },
-                { id: 25, name: 'Pikachu' }
-            ];
+    // app.PokemonService = function() {
+    app.PokemonService = ng.core.Injectable().Class({
+        constructor: function() {},
+        getPokemonList: function() {
+            return Promise.resolve([{id: 1, name: 'blub'}]);
+            // var promise = new Promise(function(resolve, reject) {
+            //     var result = [];
+            //     db.all('SELECT id, identifier FROM pokemon LIMIT 10', function(error, rows) {
+            //         for (var i = 0; i < rows.length; i++) {
+            //             result.push({ id: rows[i].id, name: rows[i].identifier });
+            //         }
+            //         resolve(result);
+            //     });
+            // });
+            // return promise;
+        },
+        getPokemon: function(id) {
+            return Promise.resolve({id: 1, name: 'blub'});
+            // var promise = new Promise(function(resolve, reject) {
+            //     var result = null;
+            //     db.get('SELECT id, identifier FROM pokemon WHERE id = ?', [id], function(error, row) {
+            //         resolve({ id: row.id, name: row.identifier });
+            //     });
+            // });
+            // return promise;
         }
-    }
+    });
 })(window.app || (window.app = {}));

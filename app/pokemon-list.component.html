@@ -1,0 +1,12 @@
+<h1>{{title}}</h1>
+<h2>Pokemon:</h2>
+<ul class="pokemonList">
+    <li *ngFor="let pokemon of pokemonList" (click)="onSelect(pokemon)" [class.selected]="pokemon === selectedPokemon">
+        <span class="badge">{{pokemon.id}}</span> {{pokemon.name}}
+    </li>
+</ul>
+
+<div *ngIf="selectedPokemon">
+    <h2>{{selectedPokemon.name | uppercase}} is my Pokemon</h2>
+    <button (click)="gotoDetail()">View Details</button>
+</div>

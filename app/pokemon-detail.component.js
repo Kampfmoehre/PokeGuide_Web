@@ -1,19 +1,27 @@
 (function(app) {
     app.PokemonDetailComponent = ng.core.Component({
         selector: 'pokemon-detail',
-        template: `
-<div *ngIf="pokemon">
-    <h2>{{pokemon.name}} details!</h2>
-    <div><label>id: </label>{{pokemon.id}}</div>
-    <div>
-      <label>name: </label>
-      <input [(ngModel)]="pokemon.name" placeholder="name">
-    </div>
-</div>
-        `
+        templateUrl: 'app/pokemon-detail.component.html'
     }).Class({
-        constructor: function() {
-            this.pokemon = null;
+        constructor: [app.PokemonService, ng.router.ActivatedRoute,
+            function(service, route) {
+                this.pokemon = null;
+                this.sub = null;
+                this.pokemonService = service;
+                this._route = route;
+            }
+        ],
+        ngOnInit: function() {
+            this.sub = this._route.params.subscribe(params => {
+                var id = +params['id'];
+                this.pokemonService.getPokemon(id).then(pokemon => this.pokemon = pokemon);
+            });
+        },
+        ngOnDestroy: function() {
+            this.sub.unsubscribe();
+        },
+        goBack: function() {
+            window.history.back();
         }
     });
 })(window.app || (window.app = {}));
