@@ -10,7 +10,7 @@
 <router-outlet></router-outlet>
         `,
         directives: [ng.router.ROUTER_DIRECTIVES],
-        providers: [ng.router.ROUTER_PROVIDERS, app.PokemonService]
+        providers: [ng.router_deprecated.ROUTER_PROVIDERS]
     }).Class({
         constructor: function() {
             this.title = 'PokeGuide';
