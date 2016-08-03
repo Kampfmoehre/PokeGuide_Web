@@ -7,37 +7,57 @@
     var map = {
         'app': 'app', // 'dist',
         '@angular': 'node_modules/@angular',
-        'angular2-in-memory-web-api': 'node_modules/angular2-in-memory-web-api',
         'rxjs': 'node_modules/rxjs',
-        'sqlite3': 'node_modules/sqlite3',
-        'node-pre-gyp': 'node_modules/node-pre-gyp',
+        'sqlite3': 'node_modules/sqlite3'
     };
     // packages tells the System loader how to load when no filename and/or no extension
     var packages = {
-        'app': { main: 'main.js', defaultExtension: 'js' },
-        'rxjs': { defaultExtension: 'js' },
-        'angular2-in-memory-web-api': { main: 'index.js', defaultExtension: 'js' },
-        'sqlite3': { main: 'sqlite3.js', defaultExtension: 'js' }
+        'app': {
+            main: 'main.js',
+            defaultExtension: 'js'
+        },
+        'rxjs': {
+            defaultExtension: 'js'
+        },
+        'sqlite3': {
+            main: 'sqlite3.js',
+            defaultExtension: 'js',
+            map: { 'node-pre-gyp': './node_modules/node-pre-gyp/' }
+        // },
+        // 'node-pre-gyp': {
+        //     meta: {
+        //         '*.json': {
+        //             loader: 'json-plugin'
+        //         }
+        //     },
+        //     map: {
+        //         '*': './node_modules/sqlite3/node_modules/node-pre-gyp'
+        //     },
+        //     defaultExtension: false
+        }
     };
     var ngPackageNames = [
         'common',
         'compiler',
         'core',
-        'forms',
-        'http',
         'platform-browser',
         'platform-browser-dynamic',
         'router',
-        'router-deprecated',
-        'upgrade',
+        'router-deprecated'
     ];
     // Individual files (~300 requests):
     function packIndex(pkgName) {
-        packages['@angular/' + pkgName] = { main: 'index.js', defaultExtension: 'js' };
+        packages['@angular/' + pkgName] = {
+            main: 'index.js',
+            defaultExtension: 'js'
+        };
     }
     // Bundled (~40 requests):
     function packUmd(pkgName) {
-        packages['@angular/' + pkgName] = { main: '/bundles/' + pkgName + '.umd.js', defaultExtension: 'js' };
+        packages['@angular/' + pkgName] = {
+            main: '/bundles/' + pkgName + '.umd.js',
+            defaultExtension: 'js'
+        };
     }
     // Most environments should use UMD; some (Karma) need the individual index files
     var setPackageConfig = System.packageWithIndex ? packIndex : packUmd;
@@ -45,7 +65,11 @@
     ngPackageNames.forEach(setPackageConfig);
     var config = {
         map: map,
-        packages: packages
+        packages: packages,
+        // packageConfigPaths: ['./node_modules/sqlite3/node_modules/node-pre-gyp/package.json'],
+        // paths: {
+        //     'node-pre-gyp': './node_modules/sqlite3/node_modules/node-pre-gyp/*'
+        // }
     };
     System.config(config);
 })(this);

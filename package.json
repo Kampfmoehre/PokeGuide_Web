@@ -26,25 +26,22 @@
         "url": "https://github.com/Kampfmoehre/PokeGuide_Web/issues"
     },
     "homepage": "https://github.com/Kampfmoehre/PokeGuide_Web#readme",
-    "databasePath": "data/pokedex.sqlite",
+    "window": {
+        "toolbar": true
+    },
     "dependencies": {
         "@angular/common": "2.0.0-rc.4",
         "@angular/compiler": "2.0.0-rc.4",
         "@angular/core": "2.0.0-rc.4",
-        "@angular/forms": "0.2.0",
-        "@angular/http": "2.0.0-rc.4",
         "@angular/platform-browser": "2.0.0-rc.4",
         "@angular/platform-browser-dynamic": "2.0.0-rc.4",
-        "@angular/router": "3.0.0-beta.1",
+        "@angular/router": "3.0.0-beta.2",
         "@angular/router-deprecated": "2.0.0-rc.2",
-        "@angular/upgrade": "2.0.0-rc.4",
-        "angular2-in-memory-web-api": "0.0.14",
         "bootstrap": "^3.3.6",
         "core-js": "^2.4.0",
         "reflect-metadata": "^0.1.3",
         "rxjs": "5.0.0-beta.6",
-        "sqlite3": "^3.1.4",
-        "systemjs": "0.19.27",
+        "systemjs": "0.19.36",
         "zone.js": "^0.6.12"
     },
     "devDependencies": {
