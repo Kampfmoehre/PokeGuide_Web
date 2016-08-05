@@ -9,6 +9,7 @@
         '@angular': 'node_modules/@angular',
         'rxjs': 'node_modules/rxjs',
         'sqlite3': 'node_modules/sqlite3'
+        // 'sqlite3': 'node_modules/sqlite3/lib/binding/node-webkit-v0.16.0-win32-x64/node_sqlite3.node'
     };
     // packages tells the System loader how to load when no filename and/or no extension
     var packages = {
@@ -22,18 +23,7 @@
         'sqlite3': {
             main: 'sqlite3.js',
             defaultExtension: 'js',
-            map: { 'node-pre-gyp': './node_modules/node-pre-gyp/' }
-        // },
-        // 'node-pre-gyp': {
-        //     meta: {
-        //         '*.json': {
-        //             loader: 'json-plugin'
-        //         }
-        //     },
-        //     map: {
-        //         '*': './node_modules/sqlite3/node_modules/node-pre-gyp'
-        //     },
-        //     defaultExtension: false
+            map: { 'node-pre-gyp': './node_modules/node-pre-gyp/', 'path': '@node/path', 'events': '@node/events', 'util': '@node/util' }
         }
     };
     var ngPackageNames = [

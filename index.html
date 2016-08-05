@@ -21,11 +21,13 @@
     <script src="systemjs.config.js"></script>
     <script>
         // System.set('node-pre-gyp', System.newModule({default: require('./node_modules/sqlite3/node_modules/node-pre-gyp')}));
-        System.set('path', System.newModule(System._nodeRequire('path')));
+        // System.set('path', System.newModule({path: require('@node/path')}));
+        // System.set('events', System.newModule(global.nodeRequire('events')));
+        // System.set('util', System.newModule(global.nodeRequire('util')));
         // System.set('*', System.newModule(System._nodeRequire('*')));
         // System.set('path', System.newModule({default: require('@node/path')}));
-        System.set('events', System.newModule({events: System.get('@node/events')}));
-        System.set('util', System.newModule({util: System.get('@node/util')}));
+        // System.set('events', System.newModule({events: System.get('@node/events')}));
+        // System.set('util', System.newModule({util: System.get('@node/util')}));
         // System.set('fs', System.newModule({default: require('@node/fs')}));
         // System.set('semver', System.newModule({default: require('@node/semver')}));
         // System.set('url', System.newModule({default: require('@node/url')}));
