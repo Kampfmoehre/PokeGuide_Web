@@ -7,23 +7,29 @@ import { PokemonService } from './pokemon.service';
 @Component({
     selector: 'pokemon-list',
     templateUrl: 'app/pokemon-list.component.html',
-    styleUrls: ['app/pokemon-list.component.css']
+    styleUrls: ['app/pokemon-list.component.css'],
+    providers: []
+
 })
-
 export class PokemonListComponent implements OnInit {
-    pokemonList: Pokemon[];
     selectedPokemon: Pokemon;
+    pokemonList: Pokemon[];
 
-    constructor(private router: Router, private pokemonService: PokemonService) { }
+    constructor(private router: Router, private pokemonService: PokemonService) {}
+
+    ngOnInit() {
+        this.getPokemonList();
+    }
 
     getPokemonList() {
         this.pokemonService.getPokemonList().then(pokemonList => this.pokemonList = pokemonList);
     }
-    ngOnInit() {
-        this.getPokemonList();
+
+    onSelect(pokemon: Pokemon) {
+        this.selectedPokemon = pokemon;
     }
-    onSelect(pokemon: Pokemon) { this.selectedPokemon = pokemon; }
     gotoDetail() {
-        this.router.navigate(['/detail', this.selectedPokemon.id]);
+        let link = ['/detail', this.selectedPokemon.id];
+        this.router.navigate(link);
     }
 }

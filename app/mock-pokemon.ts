@@ -1,14 +1,13 @@
 import { Pokemon } from './pokemon';
 
 export const POKEMONLIST: Pokemon[] = [
-  {id: 1, name: 'Bulbasaur'},
-  {id: 4, name: 'Charmander'},
-  {id: 7, name: 'Squirtle'},
-  {id: 10, name: 'Caterpie'},
-  {id: 13, name: 'Weedle'},
-  {id: 16, name: 'Pidgey'},
-  {id: 19, name: 'Rattata'},
-  {id: 21, name: 'Spearow'},
-  {id: 23, name: 'Ekans'},
-  {id: 25, name: 'Pikachu'}
+    { id: 1, name: 'Bisasam', type: 'Pflanze' },
+    { id: 4, name: 'Glumanda', type: 'Feuer' },
+    { id: 7, name: 'Schiggy', type: 'Wasser' },
+    { id: 10, name: 'Raupy', type: 'Käfer' },
+    { id: 13, name: 'Hornliu', type: 'Gift' },
+    { id: 16, name: 'Taubsi', type: 'Flug' },
+    { id: 19, name: 'Rattfratz', type: 'Normal' },
+    { id: 23, name: 'Sandan', type: 'Boden' },
+    { id: 25, name: 'Pikachu', type: 'Elektro' }
 ];

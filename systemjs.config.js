@@ -9,7 +9,6 @@
         '@angular': 'node_modules/@angular',
         'rxjs': 'node_modules/rxjs',
         'sqlite3': 'node_modules/sqlite3'
-        // 'sqlite3': 'node_modules/sqlite3/lib/binding/node-webkit-v0.16.0-win32-x64/node_sqlite3.node'
     };
     // packages tells the System loader how to load when no filename and/or no extension
     var packages = {
@@ -30,6 +29,7 @@
         'common',
         'compiler',
         'core',
+        'forms',
         'platform-browser',
         'platform-browser-dynamic',
         'router',
@@ -55,11 +55,7 @@
     ngPackageNames.forEach(setPackageConfig);
     var config = {
         map: map,
-        packages: packages,
-        // packageConfigPaths: ['./node_modules/sqlite3/node_modules/node-pre-gyp/package.json'],
-        // paths: {
-        //     'node-pre-gyp': './node_modules/sqlite3/node_modules/node-pre-gyp/*'
-        // }
+        packages: packages
     };
     System.config(config);
 })(this);

@@ -1,31 +1,28 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute, Params } from '@angular/router';
 
 import { Pokemon } from './pokemon';
 import { PokemonService } from './pokemon.service';
 
 @Component({
     selector: 'pokemon-detail',
-    templateUrl: 'app/pokemon-detail.component.html',
-    styleUrls: ['app/pokemon-detail.component.css']
+    templateUrl: 'app/pokemon-detail.component.html'
 })
 
-export class PokemonDetailComponent implements OnInit, OnDestroy {
+export class PokemonDetailComponent implements OnInit {
     pokemon: Pokemon;
-    sub: any;
 
-    constructor(private pokemonService: PokemonService, private route: ActivatedRoute) { }
+    constructor(private pokemonService: PokemonService, private route: ActivatedRoute) {
+
+    }
 
     ngOnInit() {
-        this.sub = this.route.params.subscribe(params => {
+        this.route.params.forEach((params: Params) => {
             let id = +params['id'];
-            this.pokemonService.getPokemon(id)
-                .then(pokemon => this.pokemon = pokemon);
+            this.pokemonService.getPokemon(id).then(pokemon => this.pokemon = pokemon);
         });
     }
-    ngOnDestroy() {
-        this.sub.unsubscribe();
-    }
+
     goBack() {
         window.history.back();
     }

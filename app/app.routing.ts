@@ -1,12 +1,12 @@
-import { provideRouter, RouterConfig }  from '@angular/router';
+import { Routes, RouterModule }  from '@angular/router';
 
 import { DashboardComponent } from './dashboard.component';
 import { PokemonListComponent } from './pokemon-list.component';
 import { PokemonDetailComponent } from './pokemon-detail.component';
 
-const routes: RouterConfig = [
+const appRoutes: Routes = [
     {
-        path: 'pokemon',
+        path: 'pokemonlist',
         component: PokemonListComponent
     },
     {
@@ -15,15 +15,13 @@ const routes: RouterConfig = [
         pathMatch: 'full'
     },
     {
-        path: 'detail/:id',
-        component: PokemonDetailComponent
-    },
-    {
         path: 'dashboard',
         component: DashboardComponent
+    },
+    {
+        path: 'detail/:id',
+        component: PokemonDetailComponent
     }
 ];
 
-export const appRouterProviders = [
-    provideRouter(routes)
-];
+export const routing = RouterModule.forRoot(appRoutes);
