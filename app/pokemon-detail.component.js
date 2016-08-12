@@ -3,6 +3,8 @@
         selector: 'pokemon-detail',
         templateUrl: 'app/pokemon-detail.component.html'
     }).Class({
-        constructor: function() {}
+        constructor: function() {
+            this.pokemon = {id: 1, name: 'blub', type: 'blubber'}
+        }
     });
 })(window.app || (window.app = {}));
