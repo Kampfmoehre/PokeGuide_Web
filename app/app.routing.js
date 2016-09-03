@@ -9,9 +9,10 @@
     // }, {
         path: 'pokemon',
         component: app.PokemonListComponent
-    // }, {
-    //     path: 'pokemon/:id',
-    //     component: app.PokemonDetailComponent
+    }, {
+        path: 'pokemon/:id',
+        component: app.PokemonDetailComponent
     }];
+
     app.routing = ng.router.RouterModule.forRoot(routes);
 })(window.app || (window.app = {}));
