@@ -1,8 +1,8 @@
 (function(app) {
     app.AppModule =
         ng.core.NgModule({
-            imports: [ng.platformBrowser.BrowserModule, app.routing, ng.forms.FormsModule],
-            declarations: [app.AppComponent, app.PokemonListComponent, app.PokemonDetailComponent, app.DashboardComponent],
+            imports: [ng.platformBrowser.BrowserModule, ng.forms.FormsModule, app.routing],
+            declarations: [app.AppComponent, app.PokemonListComponent, app.PokemonDetailComponent],
             providers: [app.PokemonService],
             bootstrap: [app.AppComponent]
         })

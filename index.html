@@ -23,15 +23,25 @@
     <script src='app/pokemon.service.js'></script>
     <script src='app/pokemon-detail.component.js'></script>
     <script src='app/pokemon-list.component.js'></script>
-    <script src='app/dashboard.component.js'></script>
+    <!-- <script src='app/dashboard.component.js'></script> -->
     <script src='app/app.component.js'></script>
-    <script src='app/app.routes.js'></script>
+    <script src='app/app.routing.js'></script>
     <script src='app/app.module.js'></script>
     <script src='app/main.js'></script>
 </head>
 
 <body>
     <poke-guide-web>Loading ...</poke-guide-web>
+
+    <script>
+        var path = './app/';
+        var fs = require('fs');
+
+        fs.watch(path, function() {
+            if (location)
+                location.reload();
+        });
+    </script>
 </body>
 
 </html>
