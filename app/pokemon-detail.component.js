@@ -2,25 +2,26 @@
     app.PokemonDetailComponent =
         ng.core.Component({
             selector: 'pokemon-detail',
-            inputs: ['pokemon'],
-            template: `
-            <div *ngIf="pokemon">
-                <h2>{{pokemon.name}} details</h2>
-                <div><label>id: </label>{{pokemon.id}}</div>
-                <div>
-                    <label>name: </label>
-                    <input [(ngModel)]="pokemon.name" placeholder="Name">
-                </div>
-            </div>
-            `
+            // inputs: ['pokemon'],
+            templateUrl: 'app/pokemon-detail.component.html',
+            styleUrls: ['app/pokemon-detail.component.css']
         })
         .Class({
-            constructor: function() {
-                // this.pokemon = null;
-                // ng.core.Input(this.pokemon, this);
-            },
+            constructor: [app.PokemonService, ng.router.ActivatedRoute, function(service, route) {
+                this.pokemon = null;
+                this.pokemonService = service;
+                this.route = route;
+            }],
             ngOnInit: function() {
-                console.log(this.pokemon);
+                this.route.params.forEach((params) => {
+                    var id = +params['id'];
+
+                    this.pokemonService.getPokemon(id)
+                    .then(pokemon => this.pokemon = pokemon);
+                })
+            },
+            goBack: function() {
+                window.history.back();
             }
         });
 })(window.app || (window.app = {}));
