@@ -2,7 +2,7 @@
     app.DashboardComponent =
         ng.core.Component({
             selector: 'dashboard',
-            templateUrl: 'app/app.dashboard.html',
+            templateUrl: 'app/dashboard.component.html',
             styleUrls: ['app/dashboard.component.css']
         })
         .Class({

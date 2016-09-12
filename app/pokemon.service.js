@@ -1,6 +1,7 @@
 var fs = require('fs');
 var sqlite3 = require('sqlite3').verbose();
 var db = new sqlite3.Database('data/pokedex.sqlite', sqlite3.OPEN_READONLY);
+var rx = require('rxjs');
 
 (function(app) {
     app.PokemonService =
@@ -11,7 +12,7 @@ var db = new sqlite3.Database('data/pokedex.sqlite', sqlite3.OPEN_READONLY);
                 var promise = new Promise(function(resolve, reject) {
                     var result = [];
                     db.all('SELECT id, identifier FROM pokemon LIMIT 10', function(error, rows) {
-                        for (var i = 0; i < rows.length; i++) {
+                        for(var i = 0; i < rows.length; i++) {
                             result.push({
                                 id: rows[i].id,
                                 name: rows[i].identifier
@@ -33,6 +34,24 @@ var db = new sqlite3.Database('data/pokedex.sqlite', sqlite3.OPEN_READONLY);
                     });
                 });
                 return promise;
+            },
+            search: function(term) {
+                var promise = new Promise(function(resolve, reject) {
+                    var query = "SELECT id, identifier FROM pokemon WHERE identifier like '%" + term + "%' LIMIT 10",
+                        result = [];
+                    db.all(query, function(error, rows) {
+                        if(error)
+                            reject(error);
+                        for(var i = 0; i < rows.length; i++) {
+                            result.push({
+                                id: rows[i].id,
+                                name: rows[i].identifier
+                            });
+                        }
+                        resolve(result);
+                    });
+                });
+                return rx.Observable.fromPromise(promise);
             }
         });
 })(window.app || (window.app = {}));
