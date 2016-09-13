@@ -36,22 +36,23 @@ var rx = require('rxjs');
                 return promise;
             },
             search: function(term) {
-                var promise = new Promise(function(resolve, reject) {
+                var source = new rx.Observable(observer => {
                     var query = "SELECT id, identifier FROM pokemon WHERE identifier like '%" + term + "%' LIMIT 10",
                         result = [];
                     db.all(query, function(error, rows) {
                         if(error)
-                            reject(error);
+                            oberver.error(error);
                         for(var i = 0; i < rows.length; i++) {
                             result.push({
                                 id: rows[i].id,
                                 name: rows[i].identifier
                             });
                         }
-                        resolve(result);
+                        observer.next(result);
+                        observer.complete();
                     });
                 });
-                return rx.Observable.fromPromise(promise);
+                return source;
             }
         });
 })(window.app || (window.app = {}));

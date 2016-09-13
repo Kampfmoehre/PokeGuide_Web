@@ -1,9 +1,6 @@
 <div id="search-component">
     <h4>Pokémon Suche</h4>
-    <div *ngIf="loading">
-        <span>blub</span>
-    </div>
-    <input #searchBox id="searc-box" (keyup)="search(searchBox.value)" />
+    <input #searchBox id="search-box" (keyup)="search(searchBox.value)" />
     <div>
         <div *ngFor="let pokemon of pokemonList | async" (click)="gotoDetail(pokemon)" class="search-result">
             {{pokemon.name}}

@@ -8,41 +8,40 @@ var rx = require('rxjs');
             styleUrls: ['app/pokemon-search.component.css']
         })
         .Class({
-            constructor: [app.PokemonService, ng.router.Router, function(pokemonService, router) {
+            constructor: [app.PokemonService, ng.router.Router, ng.core.ChangeDetectorRef, function(pokemonService, router, changeDetector) {
+                // *******************************************************************
+                // ToDo: find out, why angular updating does not work here
+                // and remove this ugly workaround
+                // this.changeDetector = changeDetector;
+                changeDetector.detach();
+                setInterval(() => {
+                    changeDetector.detectChanges();
+                }, 500);
+                // *******************************************************************
+
                 this.pokemonService = pokemonService;
                 this.router = router;
                 this.searchTerms = new rx.Subject();
-                this.loading = false;
-                var that = this;
-                this.searchTerms.subscribe(
-                    function(x) {
-                        console.log(x);
-                    },
-                    function(err) {
-                        console.error(err);
-                    },
-                    function() {
-                        that.loading = false;
-                    }
-                );
-                // this.pokemonList = rx.Observable.of([]);
             }],
             search: function(term) {
                 this.searchTerms.next(term);
             },
             ngOnInit: function() {
                 var that = this;
-                that.pokemonList = that.searchTerms
+                this.pokemonList = this.searchTerms
                     .debounceTime(300)
                     .distinctUntilChanged()
                     .switchMap(term => {
-                        that.loading = true;
                         return term ? that.pokemonService.search(term) : rx.Observable.of([]);
                     })
                     .catch(error => {
-                        console.log(error);
+                        console.error(error);
                         return rx.Observable.of([]);
                     });
+
+            },
+            ngOnChanges: function(changes) {
+                console.log(changes);
             },
             gotoDetail: function(pokemon) {
                 var link = ['/pokemon', pokemon.id];
