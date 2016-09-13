@@ -3,8 +3,8 @@
         ng.core.Component({
             selector: 'pokemon-detail',
             // inputs: ['pokemon'],
-            templateUrl: 'app/pokemon-detail.component.html',
-            styleUrls: ['app/pokemon-detail.component.css']
+            templateUrl: 'app/html/pokemon-detail.component.html',
+            styleUrls: ['app/css/pokemon-detail.component.css']
         })
         .Class({
             constructor: [app.PokemonService, ng.router.ActivatedRoute, function(service, route) {

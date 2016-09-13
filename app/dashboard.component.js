@@ -2,8 +2,8 @@
     app.DashboardComponent =
         ng.core.Component({
             selector: 'dashboard',
-            templateUrl: 'app/dashboard.component.html',
-            styleUrls: ['app/dashboard.component.css']
+            templateUrl: 'app/html/dashboard.component.html',
+            styleUrls: ['app/css/dashboard.component.css']
         })
         .Class({
             constructor: [app.PokemonService, ng.router.Router, function(service, router) {

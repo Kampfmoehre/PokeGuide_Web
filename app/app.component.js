@@ -10,7 +10,7 @@
               </nav>
               <router-outlet></router-outlet>
             `,
-            styleUrls: ['app/app.component.css'],
+            styleUrls: ['app/css/app.component.css'],
             providers: [app.PokemonService]
         })
         .Class({

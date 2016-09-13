@@ -4,8 +4,8 @@ var rx = require('rxjs');
     app.PokemonSearchComponent = ng.core
         .Component({
             selector: 'pokemon-search',
-            templateUrl: 'app/pokemon-search.component.html',
-            styleUrls: ['app/pokemon-search.component.css']
+            templateUrl: 'app/html/pokemon-search.component.html',
+            styleUrls: ['app/css/pokemon-search.component.css']
         })
         .Class({
             constructor: [app.PokemonService, ng.router.Router, ng.core.ChangeDetectorRef, function(pokemonService, router, changeDetector) {

@@ -2,8 +2,8 @@
     app.PokemonListComponent =
         ng.core.Component({
             selector: 'pokemon-list',
-            templateUrl: 'app/pokemon-list.component.html',
-            styleUrls: ['app/pokemon-list.component.css']
+            templateUrl: 'app/html/pokemon-list.component.html',
+            styleUrls: ['app/css/pokemon-list.component.css']
         })
         .Class({
             constructor: [app.PokemonService, ng.router.Router, function(service, router) {
