@@ -9,15 +9,8 @@ var rx = require('rxjs');
         })
         .Class({
             constructor: [app.PokemonService, ng.router.Router, ng.core.ChangeDetectorRef, function(pokemonService, router, changeDetector) {
-                // *******************************************************************
-                // ToDo: find out, why angular updating does not work here
-                // and remove this ugly workaround
-                // this.changeDetector = changeDetector;
-                changeDetector.detach();
-                setInterval(() => {
-                    changeDetector.detectChanges();
-                }, 500);
-                // *******************************************************************
+                this.changeDetector = changeDetector;
+                this.destroyed = false;
 
                 this.pokemonService = pokemonService;
                 this.router = router;
@@ -39,6 +32,15 @@ var rx = require('rxjs');
                         return rx.Observable.of([]);
                     });
 
+                // *******************************************************************
+                // ToDo: find out, why angular updating does not work here
+                // and remove this ugly workaround
+                that.changeDetector.detach();
+                setInterval(() => {
+                    if (!that.destroyed)
+                    that.changeDetector.detectChanges();
+                }, 500);
+                // *******************************************************************
             },
             ngOnChanges: function(changes) {
                 console.log(changes);
@@ -46,6 +48,9 @@ var rx = require('rxjs');
             gotoDetail: function(pokemon) {
                 var link = ['/pokemon', pokemon.id];
                 this.router.navigate(link);
+            },
+            ngOnDestroy: function() {
+                this.destroyed = true;
             }
         });
 })(window.app || (window.app = {}));
