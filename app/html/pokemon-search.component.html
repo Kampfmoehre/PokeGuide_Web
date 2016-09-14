@@ -3,7 +3,7 @@
     <input #searchBox id="search-box" (keyup)="search(searchBox.value)" />
     <div>
         <div *ngFor="let pokemon of pokemonList | async" (click)="gotoDetail(pokemon)" class="search-result">
-            {{pokemon.name}}
+            {{pokemon.id}} - {{pokemon.name}}
         </div>
     </div>
 </div>

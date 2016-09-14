@@ -35,17 +35,27 @@ var rx = require('rxjs');
                 });
                 return promise;
             },
-            search: function(term) {
+            search: function(idOrName) {
                 var source = new rx.Observable(observer => {
-                    var query = "SELECT id, identifier FROM pokemon WHERE identifier like '%" + term + "%' LIMIT 10",
-                        result = [];
+                    var result = [],
+                        field = isNaN(idOrName) ? 'name' : 'pokedex_number',
+                        query = "SELECT ps.id, pdn.pokedex_number, psn.name \
+                                 FROM pokemon_species AS ps \
+                                 LEFT JOIN pokemon_dex_numbers AS pdn ON ps.id = pdn.species_id \
+                                 LEFT JOIN (SELECT e.pokemon_species_id AS id, COALESCE(o.name, e.name) AS name \
+                                 FROM pokemon_species_names AS e \
+                                 LEFT OUTER JOIN pokemon_species_names AS o ON e.pokemon_species_id = o.pokemon_species_id AND o.local_language_id = 6 \
+                                 WHERE e.local_language_id = 9 \
+                                 GROUP BY e.pokemon_species_id) AS psn ON ps.id = psn.id \
+                                 WHERE pdn.pokedex_id = 1 AND " + field + " like '%" + idOrName + "%' LIMIT 10";
+
                     db.all(query, function(error, rows) {
                         if(error)
                             oberver.error(error);
                         for(var i = 0; i < rows.length; i++) {
                             result.push({
-                                id: rows[i].id,
-                                name: rows[i].identifier
+                                id: rows[i].pokedex_number,
+                                name: rows[i].name
                             });
                         }
                         observer.next(result);
