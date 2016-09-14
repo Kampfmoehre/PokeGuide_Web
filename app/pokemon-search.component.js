@@ -25,7 +25,7 @@ var rx = require('rxjs');
                     .debounceTime(300)
                     .distinctUntilChanged()
                     .switchMap(term => {
-                        return term ? that.pokemonService.search(term) : rx.Observable.of([]);
+                        return term ? that.pokemonService.search(term, global.language) : rx.Observable.of([]);
                     })
                     .catch(error => {
                         console.error(error);

@@ -1,0 +1,10 @@
+<h2>Settings</h2>
+
+<div class="form-group">
+    <label for="language">Sprache</label>
+    <select [(ngModel)]="selectedLanguage" (ngModelChange)="onChange()" class="form-control" id="language">
+        <option *ngFor="let language of languages" [value]="language.id">{{language.name}}</option>
+    </select>
+
+</div>
+<button (click)="goBack()">Back</button>

@@ -20,10 +20,12 @@
     <script src="node_modules/@angular/router/bundles/router.umd.js"></script>
 
     <script src='app/pokemon.service.js'></script>
+    <script src='app/settings.service.js'></script>
     <script src='app/pokemon-detail.component.js'></script>
     <script src='app/pokemon-list.component.js'></script>
     <script src='app/pokemon-search.component.js'></script>
     <script src='app/dashboard.component.js'></script>
+    <script src='app/settings.component.js'></script>
     <script src='app/app.component.js'></script>
     <script src='app/app.routing.js'></script>
     <script src='app/app.module.js'></script>
@@ -37,12 +39,11 @@
         var path = './app/';
         var fs = require('fs');
 
-        fs.watch(path, function() {
+        fs.watch(path, {recursive: true}, function() {
             if (location)
                 location.reload();
         });
     </script>
-    
 </body>
 
 </html>

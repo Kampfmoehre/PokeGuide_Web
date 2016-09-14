@@ -12,6 +12,9 @@
     }, {
         path: 'pokemon/:id',
         component: app.PokemonDetailComponent
+    }, {
+        path: 'settings',
+        component: app.SettingsComponent
     }];
 
     app.routing = ng.router.RouterModule.forRoot(routes);

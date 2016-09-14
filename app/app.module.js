@@ -7,9 +7,10 @@
                 app.DashboardComponent,
                 app.PokemonListComponent,
                 app.PokemonDetailComponent,
-                app.PokemonSearchComponent
+                app.PokemonSearchComponent,
+                app.SettingsComponent
             ],
-            providers: [app.PokemonService],
+            providers: [app.PokemonService, app.SettingsService],
             bootstrap: [app.AppComponent]
         })
         .Class({
