@@ -6,8 +6,8 @@ import { PokemonService } from './pokemon.service';
 
 @Component({
     selector: 'pokemon-list',
-    templateUrl: 'app/pokemon-list.component.html',
-    styleUrls: ['app/pokemon-list.component.css'],
+    templateUrl: './pokemon-list.component.html',
+    styleUrls: ['./pokemon-list.component.css'],
     providers: []
 
 })
@@ -29,7 +29,7 @@ export class PokemonListComponent implements OnInit {
         this.selectedPokemon = pokemon;
     }
     gotoDetail() {
-        let link = ['/detail', this.selectedPokemon.id];
+        let link = ['/pokemon', this.selectedPokemon.id];
         this.router.navigate(link);
     }
 }

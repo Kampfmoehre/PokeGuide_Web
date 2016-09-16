@@ -38,5 +38,4 @@ jspm_packages
 
 nw.js/*
 typings/*
-app/*.js
-app/*.js.map
+dist

@@ -6,7 +6,7 @@ import { PokemonDetailComponent } from './pokemon-detail.component';
 
 const appRoutes: Routes = [
     {
-        path: 'pokemonlist',
+        path: 'pokemon',
         component: PokemonListComponent
     },
     {
@@ -19,7 +19,7 @@ const appRoutes: Routes = [
         component: DashboardComponent
     },
     {
-        path: 'detail/:id',
+        path: 'pokemon/:id',
         component: PokemonDetailComponent
     }
 ];
