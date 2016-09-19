@@ -20,7 +20,7 @@ export class DashboardComponent implements OnInit {
             .then(pokemon => this.pokemonList = pokemon.slice(1, 5));
     }
     gotoDetail(pokemon: Pokemon) {
-        let link = ['/detail', pokemon.id];
+        let link = ['/pokemon', pokemon.id];
         this.router.navigate(link);
     }
 }
