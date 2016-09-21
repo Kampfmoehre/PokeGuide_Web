@@ -1,7 +1,8 @@
 import { Injectable } from '@angular/core';
 
+import { Observable, Observer } from 'rxjs';
+
 import { Pokemon } from './pokemon';
-import { POKEMONLIST } from './mock-pokemon';
 
 import * as sqlite3 from 'sqlite3';
 
@@ -16,33 +17,78 @@ export class PokemonService {
         return new Promise<Pokemon[]>((resolve, reject) => {
             let result: Pokemon[] = [];
             let query = `
-SELECT l.id, ln.name \
-FROM pokemon_species AS l \
-LEFT JOIN(SELECT e.pokemon_species_id AS id, COALESCE(o.name, e.name) AS name \
-          FROM pokemon_species_names AS e \
-          LEFT OUTER JOIN pokemon_species_names AS o ON e.pokemon_species_id = o.pokemon_species_id AND o.local_language_id = ? \
-          WHERE e.local_language_id = 9 \
-          GROUP BY e.pokemon_species_id) \
-AS ln ON l.id = ln.id
+            SELECT ps.id, psn.name
+            FROM pokemon_species AS ps
+            LEFT JOIN(SELECT e.pokemon_species_id AS id, COALESCE(o.name, e.name) AS name
+                      FROM pokemon_species_names AS e
+                      LEFT OUTER JOIN pokemon_species_names AS o ON e.pokemon_species_id = o.pokemon_species_id AND o.local_language_id = ?
+                      WHERE e.local_language_id = 9
+                      GROUP BY e.pokemon_species_id)
+            AS psn ON ps.id = psn.id
+            ORDER BY ps.id
                         `;
             db.all(query, [6], (err: Error, rows: any[]) => {
                 if (err)
                     reject(err);
 
                 for (var i = 0; i < rows.length; i++) {
-                    // let id: number = +rows[i].id;
-                    // let name: string = String(rows[i].name);
                     let pokemon: Pokemon = { id: +rows[i].id, name: String(rows[i].name), type: 'Pflanze' };
-                    // let pokemon = new Pokemon(id, name, 'blub');
                     result.push(pokemon);
                 }
                 resolve(result);
             });
-        })
-        // return Promise.resolve(POKEMONLIST);
+        });
     }
-    getPokemon(id: number) {
-        return this.getPokemonList()
-            .then(pokemonList => pokemonList.find(pokemon => pokemon.id === id));
+    getPokemon(id: number): Promise<Pokemon> {
+        return new Promise<Pokemon>((resolve, reject) => {
+            let query = `
+            SELECT ps.id, psn.name
+            FROM pokemon_species AS ps
+            LEFT JOIN(SELECT e.pokemon_species_id AS id, COALESCE(o.name, e.name) AS name
+                      FROM pokemon_species_names AS e
+                      LEFT OUTER JOIN pokemon_species_names AS o ON e.pokemon_species_id = o.pokemon_species_id AND o.local_language_id = ?
+                      WHERE e.local_language_id = 9
+                      GROUP BY e.pokemon_species_id)
+            AS psn ON ps.id = psn.id
+            WHERE ps.id = ?
+            LIMIT 1
+            `;
+
+            db.get(query, [6, id], (err: Error, row: any) => {
+                if (err)
+                    reject(err);
+                let pokemon: Pokemon = { id:+row.id, name:row.name, type: 'Feuer' };
+                resolve(pokemon);
+            });
+        });
+    }
+    search(term: string): Observable<Pokemon[]> {
+        return new Observable<Pokemon[]>((observer: Observer<Pokemon[]>) => {
+            let result: Pokemon[] = [];
+            let field = "name";
+            let query = `
+            SELECT ps.id, pdn.pokedex_number, psn.name
+            FROM pokemon_species AS ps
+            LEFT JOIN pokemon_dex_numbers AS pdn ON ps.id = pdn.species_id
+            LEFT JOIN (SELECT e.pokemon_species_id AS id, COALESCE(o.name, e.name) AS name
+                       FROM pokemon_species_names AS e
+                       LEFT OUTER JOIN pokemon_species_names AS o ON e.pokemon_species_id = o.pokemon_species_id AND o.local_language_id = ?
+                       WHERE e.local_language_id = 9
+                       GROUP BY e.pokemon_species_id)
+            AS psn ON ps.id = psn.id
+            WHERE pdn.pokedex_id = 1 AND ${field} like '%${term}%' LIMIT 10
+            `;
+
+            db.all(query, [6], (err: Error, rows: any[]) => {
+                if (err)
+                    observer.error(err);
+                for (var i = 0; i < rows.length; i++) {
+                    let pokemon: Pokemon = {id: +rows[i].pokedex_number, name: rows[i].name, type: 'Wasser'};
+                    result.push(pokemon);
+                }
+                observer.next(result);
+                observer.complete();
+            });
+        });
     }
 }

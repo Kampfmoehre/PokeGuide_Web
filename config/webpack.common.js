@@ -1,7 +1,18 @@
 var webpack = require('webpack');
 var HtmlWebpackPlugin = require('html-webpack-plugin');
 var ExtractTextPlugin = require('extract-text-webpack-plugin');
+var CopyWebpackPlugin = require('copy-webpack-plugin');
 var helpers = require('./helpers');
+var path = require('path');
+var fs = require('fs');
+var nodeModules = {};
+fs.readdirSync('node_modules')
+    .filter(function(x) {
+        return ['.bin'].indexOf(x) === -1;
+    })
+    .forEach(function(mod) {
+        nodeModules[mod] = 'commonjs ' + mod;
+    });
 
 module.exports = {
     entry: {
@@ -13,6 +24,8 @@ module.exports = {
     resolve: {
         extensions: ['', '.js', '.ts']
     },
+
+    externals: nodeModules,
 
     module: {
         loaders: [{
@@ -42,6 +55,13 @@ module.exports = {
 
         new HtmlWebpackPlugin({
             template: 'src/index.html'
-        })
+        }),
+        new CopyWebpackPlugin([{
+            from: 'src/nw.package.json',
+            to: 'package.json'
+        }, {
+            from: 'data/pokedex.sqlite',
+            to: 'data/pokedex.sqlite'
+        }])
     ]
 };
