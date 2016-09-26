@@ -1,25 +1,29 @@
 {
-  "name": "poke-guide-web",
-  "version": "0.0.1",
-  "description": "A pokedex made with nw.js and AngularJS",
-  "main": "index.html",
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/Kampfmoehre/PokeGuide_Web.git"
-  },
-  "keywords": [
-    "pokedex",
-    "pokemon"
-  ],
-  "author": "kampfmoehre",
-  "license": "MIT",
-  "bugs": {
-    "url": "https://github.com/Kampfmoehre/PokeGuide_Web/issues"
-  },
-  "homepage": "https://github.com/Kampfmoehre/PokeGuide_Web#readme",
-  "window": {
-    "toolbar": true,
-    "width": 800,
-    "height": 500
-  }
+    "name": "poke-guide-web",
+    "version": "0.0.1",
+    "description": "A pokedex made with nw.js and AngularJS",
+    "main": "index.html",
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/Kampfmoehre/PokeGuide_Web.git"
+    },
+    "keywords": [
+        "pokedex",
+        "pokemon"
+    ],
+    "author": "kampfmoehre",
+    "license": "MIT",
+    "bugs": {
+        "url": "https://github.com/Kampfmoehre/PokeGuide_Web/issues"
+    },
+    "homepage": "https://github.com/Kampfmoehre/PokeGuide_Web#readme",
+    "window": {
+        "toolbar": true,
+        "title": "PokeGuide Web",
+        "min_width": 800,
+        "min_height": 500
+    },
+    "webkit": {
+        "page-cache": false
+    }
 }

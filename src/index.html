@@ -3,7 +3,6 @@
 
 <head>
     <base href="/">
-    <!-- <link rel="stylesheet" href="styles.css"> -->
 
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -13,7 +12,16 @@
 
 <body>
     <poke-guide-web>Loading...</poke-guide-web>
+    <script>
+        var path = './';
+        var fs = require('fs');
 
+        fs.watch(path, function() {
+            if (location)
+                location.reload();
+        });
+
+    </script>
 </body>
 
 </html>

@@ -3,7 +3,9 @@ var HtmlWebpackPlugin = require('html-webpack-plugin');
 var ExtractTextPlugin = require('extract-text-webpack-plugin');
 var CopyWebpackPlugin = require('copy-webpack-plugin');
 var helpers = require('./helpers');
-var path = require('path');
+
+// ************************************************************************************
+// Gather node modules for nw.js
 var fs = require('fs');
 var nodeModules = {};
 fs.readdirSync('node_modules')
@@ -13,7 +15,8 @@ fs.readdirSync('node_modules')
     .forEach(function(mod) {
         nodeModules[mod] = 'commonjs ' + mod;
     });
-
+// ************************************************************************************
+//
 module.exports = {
     entry: {
         'polyfills': './src/polyfills.ts',
@@ -49,13 +52,15 @@ module.exports = {
     },
 
     plugins: [
+        // splits app and vendor code into separate js files
         new webpack.optimize.CommonsChunkPlugin({
             name: ['app', 'vendor', 'polyfills']
         }),
-
+        // injects generated js files into index.html
         new HtmlWebpackPlugin({
             template: 'src/index.html'
         }),
+        // copy database and extra package.sjon for nw,js
         new CopyWebpackPlugin([{
             from: 'src/nw.package.json',
             to: 'package.json'
