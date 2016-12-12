@@ -17,7 +17,7 @@
         var fs = require('fs');
 
         fs.watch(path, function() {
-            if (location)
+            if (location && typeof location.reload === "function")
                 location.reload();
         });
 

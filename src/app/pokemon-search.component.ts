@@ -16,6 +16,7 @@ import { Pokemon } from './pokemon';
 export class PokemonSearchComponent implements OnInit, OnDestroy {
     pokemonList: Observable<Pokemon[]>;
     private searchTerms = new Subject<string>();
+    private interval: any;
     constructor( private pokemonService: PokemonService, private router: Router, private ref: ChangeDetectorRef) {
         ref.detach();
     }
@@ -33,9 +34,10 @@ export class PokemonSearchComponent implements OnInit, OnDestroy {
                 return Observable.of<Pokemon[]>([]);
             });
 
-        setInterval(this.changeDetectionHack, 500, this);
+        this.interval = setInterval(this.changeDetectionHack, 500, this);
     }
-    ngOnDestroy(): void { window.clearInterval(this.changeDetectionHack, this);
+    ngOnDestroy(): void {
+        window.clearInterval(this.interval);
     }
     gotoDetail(pokemon: Pokemon): void {
         let link = ['/pokemon', pokemon.id];
