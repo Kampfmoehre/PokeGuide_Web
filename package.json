@@ -7,6 +7,7 @@
     "test": "karma start",
     "build": "rimraf dist/prod && webpack --config config/webpack.prod.js --progress --profile --bail",
     "build_nw": "rimraf dist/dev && webpack --config config/webpack.dev.js --progress --profile --bail && nw.js/nw ./dist/dev/",
+    "build_nw_no_gpu": "rimraf dist/dev && webpack --config config/webpack.dev.js --progress --profile --bail && nw.js/nw ./dist/dev/ --disable-gpu",
     "start": "rimraf dist/dev && webpack --config config/webpack.dev.js --progress --watch",
     "postinstall": "typings install",
     "tsc": "tsc",
@@ -35,10 +36,10 @@
     "@angular/platform-browser": "^2.3.0",
     "@angular/platform-browser-dynamic": "^2.3.0",
     "@angular/router": "^3.3.0",
+    "bootstrap": "^3.3.6",
     "core-js": "^2.4.1",
     "rxjs": "^5.0.0-rc.4",
-    "zone.js": "^0.7.2",
-    "bootstrap": "^3.3.6"
+    "zone.js": "^0.7.2"
   },
   "devDependencies": {
     "angular2-template-loader": "^0.4.0",
