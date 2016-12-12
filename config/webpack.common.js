@@ -60,7 +60,7 @@ module.exports = {
         new HtmlWebpackPlugin({
             template: 'src/index.html'
         }),
-        // copy database and extra package.sjon for nw,js
+        // copy database and extra package.json for nw,js
         new CopyWebpackPlugin([{
             from: 'src/nw.package.json',
             to: 'package.json'
