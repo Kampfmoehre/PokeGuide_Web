@@ -1,0 +1,48 @@
+<h3>{{title}}</h3>
+<div class="form-group">
+    <div>
+        <label for="generation">Generation</label>
+        <select class="form-control" id="generation" [(ngModel)]="selectedGeneration" (ngModelChange)="onChange()">
+                <option *ngFor="let generation of generations" [ngValue]="generation">{{generation.name}}</option>
+            </select>
+
+        <label for="enemy">Gegner</label>
+        <select class="form-control" id="enemy" [(ngModel)]="selectedEnemy" (ngModelChange)="onChange()">
+                <option *ngFor="let pokemon of pokemonList" [ngValue]="pokemon">{{pokemon.name}}</option>
+            </select>
+
+        <div *ngIf="selectedEnemy">
+            <label for="baseExp">Basis-Erfahrung</label>
+            <input id="baseExp" [(ngModel)]="selectedEnemy.baseExp" placeholder="Basis Erfahrung">
+        </div>
+
+        <div *ngIf="selectedGeneration.id == 1">
+            <input id="expAll" type="checkBox" [(ngModel)]="useExpAll" (ngModelChange)="onChange()">EP-Teiler aktiv
+        </div>
+    </div>
+    <div>
+        <h4>Pokémon Team</h4>
+        <table>
+            <tr>
+                <th>Im Team</th>
+                <th>Teilgenommen</th>
+                <th>Name</th>
+                <th>Exp</th>
+            </tr>
+            <tbody>
+                <tr *ngFor="let teamMember of pokemonTeam" class="teamMember" [ngClass]="{inactive: !teamMember.isReal}">
+                    <td>
+                        <input type="checkBox" [(ngModel)]="teamMember.isReal" (ngModelChange)="onChange()">
+                    </td>
+                    <td>
+                        <input type="checkBox" [(ngModel)]="teamMember.active" (ngModelChange)="onChange()">
+                    </td>
+                    <td>
+                        <input type="text" id="teamMemberName" [(ngModel)]="teamMember.name">
+                    </td>
+                    <td>{{teamMember.exp}}</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>

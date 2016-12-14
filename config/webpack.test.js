@@ -1,5 +1,7 @@
 var helpers = require('./helpers');
 
+const ENV = process.env.NODE_ENV = process.env.ENV = 'test';
+
 module.exports = {
     devtool: 'inline-source-map',
 

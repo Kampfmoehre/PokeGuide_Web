@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 
 import { Observable, Observer } from 'rxjs';
 
-import { Pokemon } from './pokemon';
+import { Pokemon } from './../model/pokemon';
 
 import * as sqlite3 from 'sqlite3';
 
@@ -32,7 +32,7 @@ export class PokemonService {
                     reject(err);
 
                 for (var i = 0; i < rows.length; i++) {
-                    let pokemon: Pokemon = { id: +rows[i].id, name: String(rows[i].name), type: 'Pflanze' };
+                    let pokemon: Pokemon = { id: +rows[i].id, name: String(rows[i].name), type: 'Pflanze', baseExp: 0 };
                     result.push(pokemon);
                 }
                 resolve(result);
@@ -57,7 +57,7 @@ export class PokemonService {
             db.get(query, [6, id], (err: Error, row: any) => {
                 if (err)
                     reject(err);
-                let pokemon: Pokemon = { id:+row.id, name:row.name, type: 'Feuer' };
+                let pokemon: Pokemon = { id:+row.id, name:row.name, type: 'Feuer', baseExp: 0 };
                 resolve(pokemon);
             });
         });
@@ -83,7 +83,7 @@ export class PokemonService {
                 if (err)
                     observer.error(err);
                 for (var i = 0; i < rows.length; i++) {
-                    let pokemon: Pokemon = {id: +rows[i].pokedex_number, name: rows[i].name, type: 'Wasser'};
+                    let pokemon: Pokemon = {id: +rows[i].pokedex_number, name: rows[i].name, type: 'Wasser', baseExp: 0};
                     result.push(pokemon);
                 }
                 observer.next(result);

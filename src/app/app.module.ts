@@ -9,13 +9,21 @@ import './rxjs-extensions';
 
 import { DashboardComponent } from './dashboard.component';
 import { PokemonListComponent} from './pokemon-list.component';
-import { PokemonService} from './pokemon.service';
+import { PokemonService} from './service/pokemon.service';
 import { PokemonDetailComponent} from './pokemon-detail.component';
 import { PokemonSearchComponent} from './pokemon-search.component';
+import { ExperienceCalculatorComponent } from './experience-calculator.component';
 
 @NgModule({
     imports: [BrowserModule, FormsModule, routing],
-    declarations: [AppComponent, PokemonListComponent, PokemonDetailComponent, DashboardComponent, PokemonSearchComponent],
+    declarations: [
+        AppComponent,
+        DashboardComponent,
+        ExperienceCalculatorComponent,
+        PokemonListComponent,
+        PokemonDetailComponent,
+        PokemonSearchComponent
+    ],
     providers: [PokemonService],
     bootstrap: [AppComponent]
 })

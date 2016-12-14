@@ -20,8 +20,8 @@
     "window": {
         "toolbar": true,
         "title": "PokeGuide Web",
-        "min_width": 800,
-        "min_height": 500
+        "min_width": 1000,
+        "min_height": 800
     },
     "webkit": {
         "page-cache": false
