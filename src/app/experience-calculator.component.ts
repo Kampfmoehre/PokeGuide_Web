@@ -1,20 +1,19 @@
 import { Component, OnInit, Input } from '@angular/core';
 
 import { Pokemon } from './model/pokemon';
+import { Generation } from './model/generation';
 import { POKEMONLIST } from './model/mock-pokemon';
+import { ExperienceCalculatorService } from './service/experience-calculator.service';
+import { PokemonService } from './service/pokemon.service';
 
-class Model
-{
+class TeamMember {
     id: number;
     name: string;
-}
-class TeamMember
-{
-    id: number;
-    name: string;
-    active: boolean;
-    isReal: boolean;
+    participated: boolean;
+    isinTeam: boolean;
     exp: number;
+    isTraded: boolean;
+    holdsExpShare: boolean;
 }
 
 @Component({
@@ -24,34 +23,25 @@ class TeamMember
 })
 export class ExperienceCalculatorComponent implements OnInit {
     title = 'Erfahrungs-Rechner';
-    generations: Model[];
-    selectedGeneration: Model;
+    generations: Generation[] = [];
+    selectedGeneration: Generation;
     @Input() selectedEnemy: Pokemon;
     pokemonList: Pokemon[];
     useExpAll: boolean;
     pokemonTeam: TeamMember[] = [];
+    isWild: boolean;
+    level: number;
+
+    constructor(private pokemonService: PokemonService, private expCalcService: ExperienceCalculatorService) {
+     }
 
     ngOnInit() {
-        this.generations = [{
-            id: 1,
-            name: 'Generation 1'
-        }, {
-            id: 2,
-            name: 'Generation 2'
-        }, {
-            id: 3,
-            name: 'Generation 3'
-        }, {
-            id: 4,
-            name: 'Generation 4'
-        }, {
-            id: 5,
-            name: 'Generation 5'
-        }, {
-            id: 6,
-            name: 'Generation 6'
-        }];
-        this.selectedGeneration = this.generations[0];
+        let that = this;
+        this.pokemonService.getGenerations()
+            .then((generations) => {
+                that.generations = generations;
+                that.selectedGeneration = that.generations[0];
+            });
 
         this.pokemonList = POKEMONLIST;
         this.selectedEnemy = this.pokemonList[2];
@@ -59,14 +49,42 @@ export class ExperienceCalculatorComponent implements OnInit {
             this.pokemonTeam.push({
                 id: i,
                 name: 'Pokémon ' + i,
-                active: i == 1,
-                isReal: i == 1,
-                exp: 0
+                participated: i == 1,
+                isinTeam: i == 1,
+                exp: 0,
+                isTraded: false,
+                holdsExpShare: false
             });
         }
-
+        this.isWild = true;
     }
     onChange(): void {
-        console.log('something changed');
+        if (!this.selectedEnemy || !this.selectedGeneration || !this.level || !this.pokemonTeam)
+            return;
+
+        let actualTeam = this.pokemonTeam.filter((member) => {
+            return member.isinTeam;
+        });
+        if (actualTeam.length < 0 || actualTeam.length > 6)
+            return;
+
+        let participated = actualTeam.filter((member) => {
+            return member.participated;
+        }).length;
+        if (participated < 1 || participated > 6)
+            return;
+
+        console.log('all is valid');
+        this.pokemonTeam.forEach((member) => {
+            switch (this.selectedGeneration.id) {
+                case 1:
+                    if (this.useExpAll || member.participated) {
+                        let teamCount = this.useExpAll && member.participated ? participated : 0;
+                        member.exp = this.expCalcService.calculateFirstGenExperience(this.selectedEnemy.baseExp, this.level, participated, this.isWild, member.isTraded, this.useExpAll, teamCount);
+                    } else
+                        member.exp = 0;
+                    break;
+            }
+        });
     }
 }

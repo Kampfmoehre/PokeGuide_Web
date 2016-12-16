@@ -1,6 +1,5 @@
 .form-group {
     display: flex;
-    width: 40em;
 }
 .form-group > div {
     border: solid 0.1em #eee;

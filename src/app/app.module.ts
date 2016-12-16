@@ -7,9 +7,11 @@ import { routing } from './app.routing';
 
 import './rxjs-extensions';
 
+import { PokemonService} from './service/pokemon.service';
+import { ExperienceCalculatorService } from './service/experience-calculator.service';
+
 import { DashboardComponent } from './dashboard.component';
 import { PokemonListComponent} from './pokemon-list.component';
-import { PokemonService} from './service/pokemon.service';
 import { PokemonDetailComponent} from './pokemon-detail.component';
 import { PokemonSearchComponent} from './pokemon-search.component';
 import { ExperienceCalculatorComponent } from './experience-calculator.component';
@@ -24,7 +26,7 @@ import { ExperienceCalculatorComponent } from './experience-calculator.component
         PokemonDetailComponent,
         PokemonSearchComponent
     ],
-    providers: [PokemonService],
+    providers: [PokemonService, ExperienceCalculatorService],
     bootstrap: [AppComponent]
 })
 export class AppModule {}

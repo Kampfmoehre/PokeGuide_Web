@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 
 import { Observable, Observer } from 'rxjs';
 
+import { Generation } from './../model/generation';
 import { Pokemon } from './../model/pokemon';
 
 import * as sqlite3 from 'sqlite3';
@@ -90,5 +91,36 @@ export class PokemonService {
                 observer.complete();
             });
         });
+    }
+    getGenerations(): Promise<Generation[]> {
+        return new Promise<Generation[]>((resolve, reject) => {
+            let result: Generation[] = [];
+            let query = this.getLocalizedListQuery(6, 'generations', 'generation_names', 'generation_id');
+
+            db.all(query, [], (err: Error, rows: any[]) => {
+                if (err)
+                    reject(err);
+                for (let i = 0; i < rows.length; i++) {
+                    let generation: Generation = {id: rows[i].id, name: rows[i].name};
+                    result.push(generation);
+                }
+                resolve(result);
+            });
+        });
+    }
+    getLocalizedListQuery(languageId: number, table: string, localizationTable: string, idColumn?: string): string {
+        if (!idColumn)
+            idColumn = `${table}_id`;
+        let query = `
+        SELECT t.id, tn.name
+FROM ${table} AS t
+LEFT JOIN (SELECT e.${idColumn} AS id, COALESCE(o.name, e.name) AS name
+	FROM ${localizationTable} AS e
+	LEFT OUTER JOIN ${localizationTable} AS o ON e.${idColumn} = o.${idColumn} AND o.local_language_id = ${languageId}
+	WHERE e.local_language_id = 9
+	GROUP BY e.${idColumn})
+AS tn ON t.id = tn.id
+        `;
+        return query;
     }
 }

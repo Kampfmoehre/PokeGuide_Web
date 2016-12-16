@@ -13,11 +13,17 @@
 
         <div *ngIf="selectedEnemy">
             <label for="baseExp">Basis-Erfahrung</label>
-            <input id="baseExp" [(ngModel)]="selectedEnemy.baseExp" placeholder="Basis Erfahrung">
+            <input id="baseExp" [(ngModel)]="selectedEnemy.baseExp" placeholder="Basis Erfahrung" (ngModelChange)="onChange()">
+            <label for="level">Level</label>
+            <input id="level" [(ngModel)]="level" placeholder="Level" (ngModelChange)="onChange()">
         </div>
 
-        <div *ngIf="selectedGeneration.id == 1">
-            <input id="expAll" type="checkBox" [(ngModel)]="useExpAll" (ngModelChange)="onChange()">EP-Teiler aktiv
+        <input id="isWild" type="checkBox" [(ngModel)]="isWild" (ngModelChange)="onChange()">
+        <label for="isWild">Wild</label>
+
+        <div *ngIf="selectedGeneration && (selectedGeneration.id == 1 || selectedGeneration.id > 5)">
+            <input id="expAll" type="checkBox" [(ngModel)]="useExpAll" (ngModelChange)="onChange()">
+            <label for="expAll">EP-Teiler aktiv</label>
         </div>
     </div>
     <div>
@@ -26,16 +32,24 @@
             <tr>
                 <th>Im Team</th>
                 <th>Teilgenommen</th>
+                <th>Getauscht</th>
+                <th *ngIf="selectedGeneration && (selectedGeneration.id != 1 && selectedGeneration.id < 6)">EP-Teiler</th>
                 <th>Name</th>
                 <th>Exp</th>
             </tr>
             <tbody>
-                <tr *ngFor="let teamMember of pokemonTeam" class="teamMember" [ngClass]="{inactive: !teamMember.isReal}">
+                <tr *ngFor="let teamMember of pokemonTeam" class="teamMember" [ngClass]="{inactive: !teamMember.isinTeam}">
                     <td>
-                        <input type="checkBox" [(ngModel)]="teamMember.isReal" (ngModelChange)="onChange()">
+                        <input type="checkBox" [(ngModel)]="teamMember.isinTeam" (ngModelChange)="onChange()">
                     </td>
                     <td>
-                        <input type="checkBox" [(ngModel)]="teamMember.active" (ngModelChange)="onChange()">
+                        <input type="checkBox" [(ngModel)]="teamMember.participated" (ngModelChange)="onChange()">
+                    </td>
+                    <td>
+                        <input type="checkBox" [(ngModel)]="teamMember.isTraded" (ngModelChange)="onChange()">
+                    </td>
+                    <td *ngIf="selectedGeneration && (selectedGeneration.id != 1 && selectedGeneration.id < 6)">
+                        <input type="checkBox" [(ngModel)]="teamMember.holdsExpShare" (ngModelChange)="onChange()">
                     </td>
                     <td>
                         <input type="text" id="teamMemberName" [(ngModel)]="teamMember.name">
