@@ -7,9 +7,15 @@
             </select>
 
         <label for="enemy">Gegner</label>
-        <select class="form-control" id="enemy" [(ngModel)]="selectedEnemy" (ngModelChange)="onChange()">
+        <input #searchBox id="search-box" (keyup)="search(searchBox.value)" placeholder="Pokémon suchen" />
+        <div>
+            <div *ngFor="let pokemon of pokemonList | async" (click)="selectEnemy(pokemon)" class="search-result">
+                {{pokemon.name}}
+            </div>
+        </div>
+        <!-- <select class="form-control" id="enemy" [(ngModel)]="selectedEnemy" (ngModelChange)="onChange()">
                 <option *ngFor="let pokemon of pokemonList" [ngValue]="pokemon">{{pokemon.name}}</option>
-            </select>
+            </select> -->
 
         <div *ngIf="selectedEnemy">
             <label for="baseExp">Basis-Erfahrung</label>

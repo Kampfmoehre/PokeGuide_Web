@@ -1,5 +1,8 @@
 import { Component, OnInit, Input } from '@angular/core';
 
+import { Observable } from 'rxjs/Observable';
+import { Subject } from 'rxjs/Subject';
+
 import { Pokemon } from './model/pokemon';
 import { Generation } from './model/generation';
 import { POKEMONLIST } from './model/mock-pokemon';
@@ -26,14 +29,15 @@ export class ExperienceCalculatorComponent implements OnInit {
     generations: Generation[] = [];
     selectedGeneration: Generation;
     @Input() selectedEnemy: Pokemon;
-    pokemonList: Pokemon[];
+    pokemonList: Observable<Pokemon[]>;
     useExpAll: boolean;
     pokemonTeam: TeamMember[] = [];
     isWild: boolean;
     level: number;
+    private searchTerms = new Subject<string>();
 
     constructor(private pokemonService: PokemonService, private expCalcService: ExperienceCalculatorService) {
-     }
+    }
 
     ngOnInit() {
         let that = this;
@@ -43,8 +47,15 @@ export class ExperienceCalculatorComponent implements OnInit {
                 that.selectedGeneration = that.generations[0];
             });
 
-        this.pokemonList = POKEMONLIST;
-        this.selectedEnemy = this.pokemonList[2];
+        this.pokemonList = this.searchTerms
+            .debounceTime(300)
+            .distinctUntilChanged()
+            .switchMap(term => term ? that.pokemonService.search(term, that.selectedGeneration.id) : Observable.of<Pokemon[]>([]))
+            .catch(error => {
+                console.error(error);
+                return Observable.of<Pokemon[]>([])
+            });
+        // this.selectedEnemy = this.pokemonList[2];
         for (let i = 1; i < 7; i++) {
             this.pokemonTeam.push({
                 id: i,
@@ -57,6 +68,12 @@ export class ExperienceCalculatorComponent implements OnInit {
             });
         }
         this.isWild = true;
+    }
+    search(term: string): void {
+        this.searchTerms.next(term);
+    }
+    selectEnemy(pokemon: Pokemon): void {
+        this.selectedEnemy = pokemon;
     }
     onChange(): void {
         if (!this.selectedEnemy || !this.selectedGeneration || !this.level || !this.pokemonTeam)

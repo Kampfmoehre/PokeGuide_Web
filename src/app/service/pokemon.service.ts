@@ -59,33 +59,41 @@ export class PokemonService {
             db.get(query, [6, id], (err: Error, row: any) => {
                 if (err)
                     reject(err);
-                let pokemon: Pokemon = { id:+row.id, name:row.name, type: 'Feuer', baseExp: 0 };
+                let pokemon: Pokemon = { id: +row.id, name: row.name, type: 'Feuer', baseExp: 0 };
                 resolve(pokemon);
             });
         });
     }
-    search(term: string): Observable<Pokemon[]> {
+    search(term: string, generation?: number): Observable<Pokemon[]> {
         return new Observable<Pokemon[]>((observer: Observer<Pokemon[]>) => {
             let result: Pokemon[] = [];
             let field = "name";
+            let genFilter = generation ? `AND ps.generation_id <= ${generation}` : '';
             let query = `
-            SELECT ps.id, pdn.pokedex_number, psn.name
+            SELECT ps.id, pdn.pokedex_number, psn.name, p.base_experience
             FROM pokemon_species AS ps
             LEFT JOIN pokemon_dex_numbers AS pdn ON ps.id = pdn.species_id
+            LEFT JOIN pokemon p ON ps.id = p.species_id
             LEFT JOIN (SELECT e.pokemon_species_id AS id, COALESCE(o.name, e.name) AS name
                        FROM pokemon_species_names AS e
                        LEFT OUTER JOIN pokemon_species_names AS o ON e.pokemon_species_id = o.pokemon_species_id AND o.local_language_id = ?
                        WHERE e.local_language_id = 9
                        GROUP BY e.pokemon_species_id)
             AS psn ON ps.id = psn.id
-            WHERE pdn.pokedex_id = 1 AND ${field} like '%${term}%' LIMIT 10
+            WHERE pdn.pokedex_id = 1 AND ${field} like '%${term}%' ${genFilter}
+            LIMIT 10
             `;
 
             db.all(query, [6], (err: Error, rows: any[]) => {
                 if (err)
                     observer.error(err);
                 for (var i = 0; i < rows.length; i++) {
-                    let pokemon: Pokemon = {id: +rows[i].pokedex_number, name: rows[i].name, type: 'Wasser', baseExp: 0};
+                    let pokemon: Pokemon = {
+                        id: +rows[i].pokedex_number,
+                        name: rows[i].name,
+                        type: 'Wasser',
+                        baseExp: rows[i].base_experience
+                    };
                     result.push(pokemon);
                 }
                 observer.next(result);
@@ -102,7 +110,7 @@ export class PokemonService {
                 if (err)
                     reject(err);
                 for (let i = 0; i < rows.length; i++) {
-                    let generation: Generation = {id: rows[i].id, name: rows[i].name};
+                    let generation: Generation = { id: rows[i].id, name: rows[i].name };
                     result.push(generation);
                 }
                 resolve(result);
