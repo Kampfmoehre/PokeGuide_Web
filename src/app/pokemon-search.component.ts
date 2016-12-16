@@ -2,7 +2,6 @@ import { Component, OnInit, OnDestroy, ChangeDetectorRef } from '@angular/core';
 import { Router }            from '@angular/router';
 import { Observable }        from 'rxjs/Observable';
 import { Subject }           from 'rxjs/Subject';
-// import { Observable, Subject } from 'rxjs';
 
 import { PokemonService } from './service/pokemon.service';
 import { Pokemon } from './model/pokemon';
@@ -18,7 +17,7 @@ export class PokemonSearchComponent implements OnInit, OnDestroy {
     private searchTerms = new Subject<string>();
     private interval: any;
     constructor( private pokemonService: PokemonService, private router: Router, private ref: ChangeDetectorRef) {
-        ref.detach();
+        // ref.detach();
     }
     search(term: string): void {
         this.searchTerms.next(term);
