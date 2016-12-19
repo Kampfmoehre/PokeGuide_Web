@@ -29,4 +29,13 @@ describe('experience calculator generation 1 tests', () => {
     it('should calculate 481 exp for 1 traded Pokémon defeating a wild Weepinbell at level 56 with ExpAll active', () => {
         expect(service.calculateFirstGenExperience(151, 30, 1, true, true, true, 0)).toBe(481);
     });
+    it("should calculate 63 Exp ExpAll output for a wild Raticate level 27 and 5 Pokémon in Team (reciever is traded)", () => {
+        expect(service.calculateFirstGenExperience(116, 27, 1, true, true, true, 5)).toBe(63);
+    });
+    it("should calculate 334 Exp for a traded Pokémon defeating a wild Raticate level 27 and 5 Pokémon in Team", () => {
+        expect(service.calculateFirstGenExperience(116, 27, 1, true, true, true, 0)).toBe(334);
+    });
+    it("should calculate 37 Exp ExpAll output for a traded Pokémon, a wild Spearow level 20 and 3 Pokémon in Team", () => {
+        expect(service.calculateFirstGenExperience(58, 20, 1, true, true, true, 3)).toBe(37);
+    });
 })

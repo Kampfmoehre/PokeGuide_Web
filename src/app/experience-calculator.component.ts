@@ -82,7 +82,8 @@ export class ExperienceCalculatorComponent implements OnInit {
         let actualTeam = this.pokemonTeam.filter((member) => {
             return member.isinTeam;
         });
-        if (actualTeam.length < 0 || actualTeam.length > 6)
+        let teamCount = actualTeam.length;
+        if (teamCount < 0 || teamCount > 6)
             return;
 
         let participated = actualTeam.filter((member) => {
@@ -92,14 +93,21 @@ export class ExperienceCalculatorComponent implements OnInit {
             return;
 
         console.log('all is valid');
-        this.pokemonTeam.forEach((member) => {
+        actualTeam.forEach((member) => {
             switch (this.selectedGeneration.id) {
                 case 1:
-                    if (this.useExpAll || member.participated) {
-                        let teamCount = this.useExpAll && member.participated ? participated : 0;
-                        member.exp = this.expCalcService.calculateFirstGenExperience(this.selectedEnemy.baseExp, this.level, participated, this.isWild, member.isTraded, this.useExpAll, teamCount);
-                    } else
-                        member.exp = 0;
+                    member.exp = 0;
+                    // Direct battle xp
+                    if (member.participated) {
+                        member.exp += this.expCalcService.calculateFirstGenExperience(this.selectedEnemy.baseExp, this.level, participated,
+                            this.isWild, member.isTraded, this.useExpAll, 0);
+                    }
+                    // Exp from ExpAll
+                    if (this.useExpAll) {
+                        member.exp += this.expCalcService.calculateFirstGenExperience(this.selectedEnemy.baseExp, this.level, participated,
+                            this.isWild, member.isTraded, this.useExpAll, teamCount);
+                    }
+
                     break;
             }
         });
