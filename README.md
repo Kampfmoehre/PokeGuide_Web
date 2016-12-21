@@ -1,23 +1,38 @@
 # PokeGuide_Web
-A offline Pokedex made with nw.js and AngularJS
+A offline Pokedex made with nw.js and React
 
-Requirements:
+## Requirements:
 - node.js
 - npm
+- nw-gyp
 - nw.js
 
-To install sqlite3 you need to run following command (where target is the version of nw.js that you want to use:
+### NW.js (Node-Webkit)
+To run the app you need nw.js from http://nwjs.io/. Download it for your platform und put it in the folder nw.js.
 
-`npm install sqlite3 --build-from-source --runtime=node-webkit --target_arch=x64 --target=0.16.0`
+### node.js
+You can get nodejs from https://nodejs.org/en/
+This should install npm as well
 
-npm install will download all dependencies for you. After that there should be a typings folder, if not run "npm run typings install" in your Terminal/Console.
+### SQLite3 (node-sqlite3)
+To install sqlite3 you need the following:
+- nw-gyp:
+ > npm install -g nw-gyp
+- sqlite3:
+In the project directory run
+> "npm install sqlite3 --build-from-source --runtime=node-webkit --target_arch=x64 --target=X.XX.X"
 
-To install typings for sqlite3 run
+where X.XX.X is the version of nw.js you are using, for example 0.17.1. You can find the NW.js by running nw.js/nw --version.
+Dependent on your OS multiple tools may be neccessary to build SQLite properly (like Python 2.7). Additional help can be found here: https://github.com/mapbox/node-sqlite3#building-for-node-webkit
 
-`typings install dt~sqlite3 --global --save`
+### NPM
+> npm install
 
-To run the app you need nw.js from http://nwjs.io/. Download it for your platform und put it in the folder nw.js. Now run
+This will download all other dependencies for you.
 
-`npm run build_nw`
+## Build
+- Running `npm run start` will start webpack which will listen for file changes and redploy them to `dist/dev`.
+- running `npm run build` will run webpack which will put the output to `dist/prod`.
 
-from the base folder in your Terminal/Console and the app should start.
+## Run
+ Run either `nw.js/nw dist/dev` or `nw.js/nw dist/prod`, depending on the build step above.

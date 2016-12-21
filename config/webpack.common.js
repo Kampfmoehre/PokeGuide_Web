@@ -18,22 +18,15 @@ fs.readdirSync('node_modules')
 // ************************************************************************************
 //
 module.exports = {
-    entry: {
-        'polyfills': './src/polyfills.ts',
-        'vendor': './src/vendor.ts',
-        'app': './src/main.ts'
-    },
-
-    resolve: {
-        extensions: ['', '.js', '.ts']
-    },
-
-    externals: nodeModules,
-
+    // externals: fs.readdirSync("node_modules").map(function(module) {
+    //     return "commonjs " + module
+    // }),
+    // externals: nodeModules,
     module: {
         loaders: [{
-            test: /\.ts$/,
-            loaders: ['awesome-typescript-loader', 'angular2-template-loader']
+            test: /\.jsx?/,
+            exclude: /node_modules/,
+            loader: 'babel-loader'
         }, {
             test: /\.html$/,
             loader: 'html'
@@ -50,12 +43,12 @@ module.exports = {
             loader: 'raw'
         }]
     },
-
     plugins: [
         // splits app and vendor code into separate js files
         new webpack.optimize.CommonsChunkPlugin({
             name: ['app', 'vendor', 'polyfills']
         }),
+        new webpack.NoErrorsPlugin(),
         // injects generated js files into index.html
         new HtmlWebpackPlugin({
             template: 'src/index.html'
@@ -68,5 +61,8 @@ module.exports = {
             from: 'data/pokedex.sqlite',
             to: 'data/pokedex.sqlite'
         }])
-    ]
+    ],
+    resolve: {
+        extensions: ['', '.js', '.jsx', '.json']
+    },
 };
