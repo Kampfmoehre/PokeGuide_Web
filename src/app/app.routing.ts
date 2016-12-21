@@ -1,9 +1,9 @@
 import { Routes, RouterModule }  from '@angular/router';
 
 import { DashboardComponent } from './dashboard.component';
-import { PokemonListComponent } from './pokemon-list.component';
-import { PokemonDetailComponent } from './pokemon-detail.component';
-import { ExperienceCalculatorComponent } from './experience-calculator.component';
+import { PokemonListComponent } from './pokemon/pokemon-list.component';
+import { PokemonDetailComponent } from './pokemon/pokemon-detail.component';
+import { ExperienceCalculatorComponent } from './calculator/experience-calculator.component';
 
 const appRoutes: Routes = [
     {

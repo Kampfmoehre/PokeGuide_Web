@@ -11,10 +11,10 @@ import { PokemonService} from './service/pokemon.service';
 import { ExperienceCalculatorService } from './service/experience-calculator.service';
 
 import { DashboardComponent } from './dashboard.component';
-import { PokemonListComponent} from './pokemon-list.component';
-import { PokemonDetailComponent} from './pokemon-detail.component';
-import { PokemonSearchComponent} from './pokemon-search.component';
-import { ExperienceCalculatorComponent } from './experience-calculator.component';
+import { PokemonListComponent} from './pokemon/pokemon-list.component';
+import { PokemonDetailComponent} from './pokemon/pokemon-detail.component';
+import { PokemonSearchComponent} from './pokemon/pokemon-search.component';
+import { ExperienceCalculatorComponent } from './calculator/experience-calculator.component';
 
 @NgModule({
     imports: [BrowserModule, FormsModule, routing],

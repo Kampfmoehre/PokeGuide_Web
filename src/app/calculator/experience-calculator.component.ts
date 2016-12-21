@@ -3,11 +3,12 @@ import { Component, OnInit, Input } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
 import { Subject } from 'rxjs/Subject';
 
-import { Pokemon } from './model/pokemon';
-import { Generation } from './model/generation';
-import { POKEMONLIST } from './model/mock-pokemon';
-import { ExperienceCalculatorService } from './service/experience-calculator.service';
-import { PokemonService } from './service/pokemon.service';
+import { Generation } from './../model/generation';
+import { Pokemon } from './../model/pokemon';
+import { POKEMONLIST } from './../model/mock-pokemon';
+
+import { ExperienceCalculatorService } from './../service/experience-calculator.service';
+import { PokemonService } from './../service/pokemon.service';
 
 class TeamMember {
     id: number;

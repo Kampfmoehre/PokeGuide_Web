@@ -3,8 +3,8 @@ import { Router }            from '@angular/router';
 import { Observable }        from 'rxjs/Observable';
 import { Subject }           from 'rxjs/Subject';
 
-import { PokemonService } from './service/pokemon.service';
-import { Pokemon } from './model/pokemon';
+import { PokemonService } from './../service/pokemon.service';
+import { Pokemon } from './../model/pokemon';
 
 @Component({
     selector: 'pokemon-search',
