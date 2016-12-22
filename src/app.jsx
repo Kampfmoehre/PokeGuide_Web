@@ -17,7 +17,7 @@ const App = React.createClass({
     render() {
         return (
             <div>
-                <h1>Moin</h1>
+                <h1>Moinsen</h1>
                 <Link to="/ivcalculator">IV Calculator</Link>
             </div>
         );

@@ -21,7 +21,14 @@ module.exports = {
     // externals: fs.readdirSync("node_modules").map(function(module) {
     //     return "commonjs " + module
     // }),
-    // externals: nodeModules,
+    externals: {
+        sqlite3: 'commonjs sqlite3'
+    },
+    // externals: [nodeModules],
+    global: true,
+    node: {
+        fs: "empty"
+    },
     module: {
         loaders: [{
             test: /\.jsx?/,
@@ -41,6 +48,9 @@ module.exports = {
             test: /\.css$/,
             include: helpers.root('src', 'app'),
             loader: 'raw'
+        }, {
+            test: /\.json$/,
+            loader: 'json-loader'
         }]
     },
     plugins: [
@@ -63,6 +73,7 @@ module.exports = {
         }])
     ],
     resolve: {
-        extensions: ['', '.js', '.jsx', '.json']
+        extensions: ['', '.js', '.jsx', '.json'],
+        moduleDirectories: ['node_modules']
     },
 };
